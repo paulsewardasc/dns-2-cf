@@ -14,18 +14,28 @@ def csv_to_yaml(csv_file, yaml_file, desired_order):
     reader = csv.DictReader(csvfile, delimiter=',', quotechar='\'')
     # Type,Name,Value
     # CNAME,nn7dfx2vndu4c2zycwq2a65haxt2tnfv._domainkey.lionsfestivals.com,nn7dfx2vndu4c2zycwq2a65haxt2tnfv.dkim.amazonses.com
+    drecs = ['A','CNAME']
     for row in reader:
-      name = row['Name'] + '.'
       type = row['Type']
+      if type in drecs:
+        name = row['Name'] + '.'
+      else:
+        name = row['Name']
       ttl = 86400
       key = (row['Name'], row['Type'])  # Combine Name and Type as key
       resource_records = row['Value'].split('|')
       new_resource_records = []
       for resource_record in resource_records:
         if "\"" in resource_record:
-          new_resource_record = scalarstring.SingleQuotedScalarString(resource_record + '.')
+          if type in drecs:  
+            new_resource_record = scalarstring.SingleQuotedScalarString(resource_record + '.')
+          else:
+            new_resource_record = scalarstring.SingleQuotedScalarString(resource_record)
         else:
-          new_resource_record = scalarstring.DoubleQuotedScalarString(resource_record + '.')
+          if type in drecs:
+            new_resource_record = scalarstring.DoubleQuotedScalarString(resource_record + '.')
+          else:
+            new_resource_record = scalarstring.DoubleQuotedScalarString(resource_record)
         new_resource_records.append(new_resource_record)
       resource_records = new_resource_records
       
