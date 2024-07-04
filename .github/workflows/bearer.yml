@@ -14,3 +14,4 @@ jobs:
         uses: bearer/bearer-action@v2
         with:
           diff: true
+          config-file: "/bearer.yml"
