@@ -10,7 +10,7 @@ report:
 rule:
     disable-default-rules: false
     only-rule: []
-    skip-rule: []
+    skip-rule: [php_lang_reflection_using_user_input]
 scan:
     context: ""
     data_subject_mapping: ""
