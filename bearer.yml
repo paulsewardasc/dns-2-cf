@@ -2,9 +2,9 @@ disable-version-check: false
 log-level: info
 report:
     fail-on-severity: critical,high,medium,low
-    format: ""
+    format: "yaml"
     no-color: false
-    output: ""
+    output: "/bearer/report.yaml"
     report: security
     severity: critical,high,medium,low,warning
 rule:
